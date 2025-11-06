@@ -35,9 +35,12 @@ end
 function grid:draw()
     love.graphics.setLineWidth(0.5)
     
-    for i = 0, self.countX do
-        for j = 0, self.countY do
-            love.graphics.rectangle("line", self.x + i * self.size, self.y + j * self.size, self.size, self.size )     
+    for i = 1, #self.grids do
+        for j = 1, #self.grids[i] do
+            if self.grids[i][j].hovering then
+                love.graphics.setColor(0.7, 0.7, 1)
+            end
+            love.graphics.rectangle("line", self.grids[i][j].x, self.grids[i][j].y, self.size, self.size )     
         end
     end
 
