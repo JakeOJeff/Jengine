@@ -18,6 +18,18 @@ function grid:create()
     
     self.grids = {}
 
+    for i = 1, #self.grids do
+        self.grids[i] = {}
+        for j = 1, #self.grids do
+            self.grids[i][j] = {
+                x = self.x + ((i-1) * self.size),
+                y = self.y + ((j-1) * self.size),
+                hovering = false,
+                occupied = false
+            }
+        end
+    end
+
 end
 
 function grid:draw()
