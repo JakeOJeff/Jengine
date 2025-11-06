@@ -15,6 +15,8 @@ function grid:create()
     
     self.width = self.size * self.countX
     self.height = self.size * self.countY
+    
+    self.grids = {}
 
 end
 
