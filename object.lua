@@ -14,6 +14,11 @@ function object:newRect(world, x, y, width, height, type, angle)
     self.shape = love.physics.newRectangleShape(self.width, self.height)
     self.fixture = love.physics.newFixture(self.body, self.shape)
 
+    if not gravity then
+        self.body:setLinearVelocity(0, 0)
+        self.body:setAngularVelocity(0)
+    end
+
     self.body:setAngle(self.angle)
 
     return self

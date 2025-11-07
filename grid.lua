@@ -25,6 +25,11 @@ function grid:create()
             }
         end
     end
+    Object:newRect(World, self.x, self.y, self.width, 1,"static", 0)
+    Object:newRect(World, self.x + self.width, self.y, 1, self.height,"static", 0)
+
+    Object:newRect(World, self.x, self.y, 1, self.height,"static", 0)
+    Object:newRect(World, self.x, self.y + self.height, self.width, 1,"static", 0)
 end
 
 function grid:update()
@@ -37,7 +42,7 @@ function grid:update()
                my > cell.y and my < cell.y + self.size then
                 cell.hovering = true
 
-                if love.mouse.isDown(1) then
+                if love.mouse.isDown(1) and not cell.obj then
                     cell.obj = Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
                 end
             else
@@ -73,6 +78,24 @@ function grid:draw()
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size) 
             else
                 love.graphics.setColor(1, 1, 1)
+            end
+        end
+    end
+    for _, body in pairs(World:getBodies()) do
+        -- You can get the fixtures attached to this body
+        for _, fixture in pairs(body:getFixtures()) do
+            local shape = fixture:getShape()
+            local shapeType = shape:getType()
+
+            if shapeType == "polygon" then
+                -- For rectangles
+                local x, y = body:getPosition()
+                local angle = body:getAngle()
+                local points = {body:getWorldPoints(shape:getPoints())}
+
+                love.graphics.push()
+                love.graphics.polygon("fill", points)
+                love.graphics.pop()
             end
         end
     end
