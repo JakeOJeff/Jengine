@@ -45,6 +45,9 @@ function grid:update()
                 if love.mouse.isDown(1) and not cell.obj then
                     cell.obj = Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
                 end
+                if love.mouse.isDown(2) and not cell.obj then
+                    cell.obj = Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
+                end
             else
                 cell.hovering = false
             end
@@ -62,17 +65,17 @@ function grid:draw()
             love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
                 love.graphics.setColor(1,1,1)
 
-            if cell.obj then
-                local body = cell.obj.body
-                local x, y = body:getPosition()
-                local angle = body:getAngle()
+            -- if cell.obj then
+            --     local body = cell.obj.body
+            --     local x, y = body:getPosition()
+            --     local angle = body:getAngle()
 
-                love.graphics.push()
-                love.graphics.translate(x, y)
-                love.graphics.rotate(angle)
-                love.graphics.rectangle("fill", -cell.obj.width / 2, -cell.obj.height / 2, cell.obj.width, cell.obj.height)
-                love.graphics.pop()
-            end
+            --     love.graphics.push()
+            --     love.graphics.translate(x, y)
+            --     love.graphics.rotate(angle)
+            --     love.graphics.rectangle("fill", -cell.obj.width / 2, -cell.obj.height / 2, cell.obj.width, cell.obj.height)
+            --     love.graphics.pop()
+            -- end
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1)
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size) 
@@ -95,6 +98,22 @@ function grid:draw()
 
                 love.graphics.push()
                 love.graphics.polygon("fill", points)
+                love.graphics.pop()
+            end
+            if shapeType == "circle" then
+                local bx, by = body:getPosition()
+                local sx, sy = shape:getPoint()      -- circle's local offset relative to body
+                local radius = shape:getRadius()
+                local angle = body:getAngle()
+
+                -- Calculate actual world-space center of the circle
+                local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
+                local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
+
+                love.graphics.push()
+                love.graphics.translate(cx, cy)
+                love.graphics.rotate(angle)
+                love.graphics.circle("fill", 0, 0, radius)
                 love.graphics.pop()
             end
         end

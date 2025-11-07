@@ -32,6 +32,6 @@ function love.keypressed(key, scancode, isrepeat)
     if key == "space" then
         gravity = not gravity
 
-
+    elseif key == "r" then
     end
 end
