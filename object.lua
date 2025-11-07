@@ -8,11 +8,12 @@ function object:newRect(world, x, y, width, height, type, angle)
     self.width = width
     self.height = height
     self.angle = angle or 0
+    self.type = type
 
     self.body = love.physics.newBody(world, self.x, self.y, self.type)
     self.shape = love.physics.newRectangleShape(self.width, self.height)
     self.fixture = love.physics.newFixture(self.body, self.shape)
-    
+
     self.body:setAngle(self.angle)
 
     return self

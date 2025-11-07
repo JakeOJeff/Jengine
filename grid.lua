@@ -36,6 +36,10 @@ function grid:update()
             if mx > cell.x and mx < cell.x + self.size and
                my > cell.y and my < cell.y + self.size then
                 cell.hovering = true
+
+                if love.mouse.isDown(1) then
+                    cell.obj = Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
+                end
             else
                 cell.hovering = false
             end
@@ -51,6 +55,11 @@ function grid:draw()
             local cell = self.grids[i][j]
 
             love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+
+            if cell.obj then
+                love.graphics.setColor(1,1,1)
+                love.graphics.rectangle("fill", cell.obj.x, cell.obj.y, cell.obj.width, cell.obj.height)
+            end
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1)
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size) 
