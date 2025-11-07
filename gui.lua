@@ -40,7 +40,6 @@ function gui:create()
     end
     staticCircle.draw = function(cell)
         local radius = self.size / 2
-        love.graphics.setColor(1, 1, 1)
         love.graphics.circle("fill", cell.x + radius, cell.y + radius, radius)
     end
     local dynamicCircle = self.buttons[2][1]
@@ -49,8 +48,7 @@ function gui:create()
     end
     dynamicCircle.draw = function(cell)
         local radius = self.size / 2
-        love.graphics.setColor(1, 1, 1)
-                love.graphics.setLineWidth(3)
+        love.graphics.setLineWidth(3)
         love.graphics.circle("line", cell.x + radius, cell.y + radius, radius)
         love.graphics.setLineWidth(1)
     end
@@ -59,8 +57,6 @@ function gui:create()
         return Object:newRect(World, cell.x, cell.y, self.size, self.size, "static", 0)
     end
     staticRect.draw = function(cell)
-        
-        love.graphics.setColor(1, 1, 1)
         love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
     end
     local dynamicRect = self.buttons[2][2]
@@ -68,7 +64,6 @@ function gui:create()
         return Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
     end
     dynamicRect.draw = function(cell)
-        love.graphics.setColor(1, 1, 1)
         love.graphics.setLineWidth(3)
         love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
         love.graphics.setLineWidth(1)
@@ -100,8 +95,12 @@ function gui:draw()
                 love.graphics.setColor(0.7, 0.7, 1)
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
             end
-            love.graphics.setColor(1, 1, 1)
-            love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+            if cell.selected then
+                love.graphics.setColor(1,1,1,0.5)
+            else
+                love.graphics.setColor(1, 1, 1)
+                love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+            end
 
             cell.draw(cell)
         end
