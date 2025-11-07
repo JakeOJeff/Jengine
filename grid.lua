@@ -97,6 +97,8 @@ function grid:draw()
                 local sx, sy = shape:getPoint()      -- circle's local offset relative to body
                 local radius = shape:getRadius()
                 local angle = body:getAngle()
+                local type = body:getType()
+                local fillType = type == "static" and "fill" or "line" 
 
                 -- Calculate actual world-space center of the circle
                 local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
@@ -105,7 +107,7 @@ function grid:draw()
                 love.graphics.push()
                 love.graphics.translate(cx, cy)
                 love.graphics.rotate(angle)
-                love.graphics.circle("fill", 0, 0, radius)
+                love.graphics.circle(fillType, 0, 0, radius)
                 love.graphics.pop()
             end
         end
