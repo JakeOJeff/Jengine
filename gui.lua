@@ -36,11 +36,14 @@ function gui:create()
     staticCircle.func = function (cell)
         return Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
     end
+end
 
+function gui:update()
+    
 end
 
 function gui:draw()
-    love.graphics.setLineWidth(0.5)
+    love.graphics.setLineWidth(1)
     for i = 1, self.countX do
         for j = 1, self.countY do
             local cell = self.buttons[i][j]

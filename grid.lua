@@ -67,17 +67,6 @@ function grid:draw()
             end
                 love.graphics.setColor(1,1,1)
 
-            -- if cell.obj then
-            --     local body = cell.obj.body
-            --     local x, y = body:getPosition()
-            --     local angle = body:getAngle()
-
-            --     love.graphics.push()
-            --     love.graphics.translate(x, y)
-            --     love.graphics.rotate(angle)
-            --     love.graphics.rectangle("fill", -cell.obj.width / 2, -cell.obj.height / 2, cell.obj.width, cell.obj.height)
-            --     love.graphics.pop()
-            -- end
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1)
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size) 
