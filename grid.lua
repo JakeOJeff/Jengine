@@ -55,10 +55,18 @@ function grid:draw()
             local cell = self.grids[i][j]
 
             love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+                love.graphics.setColor(1,1,1)
 
             if cell.obj then
-                love.graphics.setColor(1,1,1)
-                love.graphics.rectangle("fill", cell.obj.x, cell.obj.y, cell.obj.width, cell.obj.height)
+                local body = cell.obj.body
+                local x, y = body:getPosition()
+                local angle = body:getAngle()
+
+                love.graphics.push()
+                love.graphics.translate(x, y)
+                love.graphics.rotate(angle)
+                love.graphics.rectangle("fill", -cell.obj.width / 2, -cell.obj.height / 2, cell.obj.width, cell.obj.height)
+                love.graphics.pop()
             end
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1)
