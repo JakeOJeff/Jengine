@@ -62,7 +62,9 @@ function grid:draw()
         for j = 1, self.countY do
             local cell = self.grids[i][j]
 
+            if not gravity then
             love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+            end
                 love.graphics.setColor(1,1,1)
 
             -- if cell.obj then
