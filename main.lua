@@ -33,5 +33,9 @@ function love.keypressed(key, scancode, isrepeat)
         gravity = not gravity
 
     elseif key == "r" then
+        for _, body in pairs(World:getBodies()) do
+            body:destroy()
+        end
+        grid:create()
     end
 end
