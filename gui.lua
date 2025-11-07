@@ -36,14 +36,22 @@ function gui:create()
 
     local staticCircle = self.buttons[1][1]
     staticCircle.func = function(cell)
-        return Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
+        return Object:newCirc(World, cell.x, cell.y, self.size, "static", 0)
     end
     staticCircle.draw = function(cell)
         local radius = self.size / 2
         love.graphics.setColor(1, 1, 1)
+        love.graphics.circle("fill", cell.x + radius, cell.y + radius, radius)
+    end
+    local dynamicCircle = self.buttons[2][1]
+    dynamicCircle.func = function(cell)
+        return Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
+    end
+    dynamicCircle.draw = function(cell)
+        local radius = self.size / 2
+        love.graphics.setColor(1, 1, 1)
         love.graphics.circle("line", cell.x + radius, cell.y + radius, radius)
     end
-
 end
 
 function gui:update()
