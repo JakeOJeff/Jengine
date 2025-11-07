@@ -25,11 +25,11 @@ function grid:create()
             }
         end
     end
-    Object:newRect(World, self.x, self.y, self.width, 1,"static", 0)
-    Object:newRect(World, self.x + self.width, self.y, 1, self.height,"static", 0)
+    Object:newRect(World, self.x, self.y - 1, self.width, 1,"static", 0)
+    Object:newRect(World, self.x + self.width + 1, self.y, 1, self.height,"static", 0)
 
-    Object:newRect(World, self.x, self.y, 1, self.height,"static", 0)
-    Object:newRect(World, self.x, self.y + self.height, self.width, 1,"static", 0)
+    Object:newRect(World, self.x - 1, self.y, 1, self.height,"static", 0)
+    Object:newRect(World, self.x, self.y + self.height + 1, self.width, 1,"static", 0)
 end
 
 function grid:update()
