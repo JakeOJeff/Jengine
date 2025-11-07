@@ -38,9 +38,12 @@ function gui:create()
     staticCircle.func = function(cell)
         return Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
     end
-    staticCircle.draw = function()
-        love.graphics.circle("fill", staticCircle.x, staticCircle.x, 48 / 2)
+    staticCircle.draw = function(cell)
+        local radius = self.size / 2
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.circle("line", cell.x + radius, cell.y + radius, radius)
     end
+
 end
 
 function gui:update()
