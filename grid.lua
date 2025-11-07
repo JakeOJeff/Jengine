@@ -63,7 +63,7 @@ function grid:draw()
             local cell = self.grids[i][j]
 
             if not gravity then
-            love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+                love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
             end
                 love.graphics.setColor(1,1,1)
 

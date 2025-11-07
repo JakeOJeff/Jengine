@@ -9,6 +9,7 @@ gravity = false
 
 function love.load()
     Grid:create()
+    Gui:create()
 end
 function love.update(dt)
     World:update(dt)
@@ -27,6 +28,7 @@ function love.update(dt)
 end
 function love.draw()
     Grid:draw()
+    Gui:draw()
 end
 
 function love.keypressed(key, scancode, isrepeat)

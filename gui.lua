@@ -39,4 +39,20 @@ function gui:create()
 
 end
 
+function gui:draw()
+    love.graphics.setLineWidth(0.5)
+    for i = 1, self.countX do
+        for j = 1, self.countY do
+            local cell = self.buttons[i][j]
+            love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+            if cell.hovering then
+                love.graphics.setColor(0.7, 0.7, 1)
+                love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size) 
+            else
+                love.graphics.setColor(1, 1, 1)
+            end
+        end
+    end
+end
+
 return gui
