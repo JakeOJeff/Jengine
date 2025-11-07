@@ -13,6 +13,9 @@ function grid:create()
     self.height = self.size * self.countY
     
     self.grids = {}
+    self.func = function (cell)
+        return Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
+    end
 
     for i = 1, self.countX do
         self.grids[i] = {}
@@ -43,11 +46,9 @@ function grid:update()
                 cell.hovering = true
 
                 if love.mouse.isDown(1) and not cell.obj then
-                    cell.obj = Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
+                    cell.obj = self.func(cell)
                 end
-                if love.mouse.isDown(2) and not cell.obj then
-                    cell.obj = Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
-                end
+
             else
                 cell.hovering = false
             end

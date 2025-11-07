@@ -42,3 +42,8 @@ function love.keypressed(key, scancode, isrepeat)
         Grid:create()
     end
 end 
+function love.mousepressed(x, y, button)
+    if button == 1 then
+        Gui:mousepressed(x, y)
+    end
+end
