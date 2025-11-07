@@ -27,12 +27,14 @@ function gui:create()
                 seleted = false,
                 func = function ()
                     
-                end,
-                draw = function ()
-                    
                 end
             }
         end
+    end
+
+    local staticCircle =  self.buttons[1][1]
+    staticCircle.func = function (cell)
+        return Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
     end
 
 end
