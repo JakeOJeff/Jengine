@@ -53,7 +53,7 @@ function grid:draw()
             love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1)
-               love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size) 
+                love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size) 
             else
                 love.graphics.setColor(1, 1, 1)
             end
