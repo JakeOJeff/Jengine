@@ -50,7 +50,28 @@ function gui:create()
     dynamicCircle.draw = function(cell)
         local radius = self.size / 2
         love.graphics.setColor(1, 1, 1)
+                love.graphics.setLineWidth(3)
         love.graphics.circle("line", cell.x + radius, cell.y + radius, radius)
+        love.graphics.setLineWidth(1)
+    end
+    local staticRect = self.buttons[1][2]
+    staticRect.func = function(cell)
+        return Object:newRect(World, cell.x, cell.y, self.size, self.size, "static", 0)
+    end
+    staticRect.draw = function(cell)
+        
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
+    end
+    local dynamicRect = self.buttons[2][2]
+    dynamicRect.func = function(cell)
+        return Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
+    end
+    dynamicRect.draw = function(cell)
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.setLineWidth(3)
+        love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+        love.graphics.setLineWidth(1)
     end
 end
 

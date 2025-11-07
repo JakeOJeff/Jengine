@@ -87,10 +87,15 @@ function grid:draw()
                 local x, y = body:getPosition()
                 local angle = body:getAngle()
                 local points = {body:getWorldPoints(shape:getPoints())}
+                local type = body:getType()
+                local fillType = type == "static" and "fill" or "line" 
+
+                love.graphics.setLineWidth(3)
 
                 love.graphics.push()
-                love.graphics.polygon("fill", points)
+                love.graphics.polygon(fillType, points)
                 love.graphics.pop()
+                love.graphics.setLineWidth(1)
             end
             if shapeType == "circle" then
                 local bx, by = body:getPosition()
@@ -103,12 +108,14 @@ function grid:draw()
                 -- Calculate actual world-space center of the circle
                 local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
                 local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
+                love.graphics.setLineWidth(3)
 
                 love.graphics.push()
                 love.graphics.translate(cx, cy)
                 love.graphics.rotate(angle)
                 love.graphics.circle(fillType, 0, 0, radius)
                 love.graphics.pop()
+                love.graphics.setLineWidth(1)
             end
         end
     end
