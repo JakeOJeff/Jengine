@@ -26,6 +26,9 @@ function gui:create()
                 seleted = false,
                 func = function()
 
+                end,
+                draw = function ()
+                    
                 end
             }
         end
@@ -34,6 +37,9 @@ function gui:create()
     local staticCircle = self.buttons[1][1]
     staticCircle.func = function(cell)
         return Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
+    end
+    staticCircle.draw = function()
+        love.graphics.circle("fill", staticCircle.x, staticCircle.x, 48 / 2)
     end
 end
 
@@ -46,8 +52,8 @@ function gui:update()
             if mx > cell.x and mx < cell.x + self.size and
                 my > cell.y and my < cell.y + self.size then
                 cell.hovering = true
-                else
-                    cell.hovering = false
+            else
+                cell.hovering = false
             end
         end
     end
@@ -58,25 +64,31 @@ function gui:draw()
     for i = 1, self.countX do
         for j = 1, self.countY do
             local cell = self.buttons[i][j]
-            love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1)
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
-            else
-                love.graphics.setColor(1, 1, 1)
             end
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+
+            cell.draw(cell)
         end
     end
 end
+
 function gui:mousepressed(mx, my)
     for i = 1, self.countX do
         for j = 1, self.countY do
             local cell = self.buttons[i][j]
             if mx > cell.x and mx < cell.x + self.size and
-               my > cell.y and my < cell.y + self.size then
+                my > cell.y and my < cell.y + self.size then
                 Grid.func = cell.func
+                cell.selected = true
+            else
+                cell.selected = false
             end
         end
     end
 end
+
 return gui

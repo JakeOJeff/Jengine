@@ -14,6 +14,7 @@ end
 function love.update(dt)
     World:update(dt)
     Grid:update()
+    Gui:update()
             if gravity then
             World:setGravity(0, 9.81 * 64)
             print("Gravity ON")
