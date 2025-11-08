@@ -70,14 +70,14 @@ function gui:create()
     end
     local staticTri = self.buttons[1][3]
     staticTri.func = function(cell)
-        return Object:newTri(World, cell.x, cell.y, self.size, self.size, "static", 0)
+        return Object:newTri(World, cell.x, cell.y, self.size, "static", 0)
     end
     staticTri.draw = function(cell)
         love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
     end
     local dynamicTri = self.buttons[2][3]
     dynamicTri.func = function(cell)
-        return Object:newTri(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
+        return Object:newTri(World, cell.x, cell.y, self.size, "dynamic", 0)
     end
     dynamicTri.draw = function(cell)
         love.graphics.setLineWidth(3)
