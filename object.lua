@@ -57,6 +57,20 @@ function object:newTri(world, x, y, size, type, angle)
     self.body = love.physics.newBody(world, self.x, self.y , self.type)
 
     local half = size/2
+    self.shape = love.physics.newPolygonShape(
+        0, -half
+        -half, half,
+        half, half
+    )
+
+    self.fixture = love.physics.newFixture(self.body, self.shape)
     
+    if not gravity then
+        self.body:setLinearVelocity(0, 0)
+        self.body:setAngularVelocity(0)
+    end
+
+    self.body:setAngle(self.angle)
+    return self
 end
 return object
