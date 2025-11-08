@@ -77,9 +77,9 @@ function gui:create()
         local x, y = cell.x + half, cell.y + half
 
         love.graphics.polygon("fill",
-            x,  y - half,
-            x - half, y + half,
-            x + half, y + half
+            x + half,  y - half,
+            x + half, y + half,
+            x - half , y + half
         )
     end
     local dynamicTri = self.buttons[2][3]
