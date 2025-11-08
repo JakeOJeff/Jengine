@@ -13,6 +13,9 @@ function grid:create()
     self.height = self.size * self.countY
     
     self.grids = {}
+    self.func = function (cell)
+        return Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
+    end
 
     for i = 1, self.countX do
         self.grids[i] = {}
@@ -25,11 +28,11 @@ function grid:create()
             }
         end
     end
-    Object:newRect(World, self.x, self.y, self.width, 1,"static", 0)
-    Object:newRect(World, self.x + self.width, self.y, 1, self.height,"static", 0)
+    Object:newRect(World, self.x, self.y - 1, self.width, 1,"static", 0)
+    Object:newRect(World, self.x + self.width + 1, self.y, 1, self.height,"static", 0)
 
-    Object:newRect(World, self.x, self.y, 1, self.height,"static", 0)
-    Object:newRect(World, self.x, self.y + self.height, self.width, 1,"static", 0)
+    Object:newRect(World, self.x - 1, self.y, 1, self.height,"static", 0)
+    Object:newRect(World, self.x, self.y + self.height + 1, self.width, 1,"static", 0)
 end
 
 function grid:update()
@@ -43,11 +46,9 @@ function grid:update()
                 cell.hovering = true
 
                 if love.mouse.isDown(1) and not cell.obj then
-                    cell.obj = Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
+                    cell.obj = self.func(cell)
                 end
-                if love.mouse.isDown(2) and not cell.obj then
-                    cell.obj = Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", 0)
-                end
+
             else
                 cell.hovering = false
             end
@@ -63,27 +64,28 @@ function grid:draw()
             local cell = self.grids[i][j]
 
             if not gravity then
-            love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+                love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
             end
                 love.graphics.setColor(1,1,1)
 
-            -- if cell.obj then
-            --     local body = cell.obj.body
-            --     local x, y = body:getPosition()
-            --     local angle = body:getAngle()
-
-            --     love.graphics.push()
-            --     love.graphics.translate(x, y)
-            --     love.graphics.rotate(angle)
-            --     love.graphics.rectangle("fill", -cell.obj.width / 2, -cell.obj.height / 2, cell.obj.width, cell.obj.height)
-            --     love.graphics.pop()
-            -- end
             if cell.hovering then
-                love.graphics.setColor(0.7, 0.7, 1)
-                love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size) 
+                love.graphics.setColor(0.7, 0.7, 1, 0.3)
+                love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
+                love.graphics.setColor(1, 1, 1)
+
+                -- Draw the preview of the selected GUI button on hover
+                for k = 1, Gui.countX do
+                    for m = 1, Gui.countY do
+                        if Gui.buttons[k][m].func == Grid.func then
+                            -- Pass cell so the preview appears at correct location
+                            Gui.buttons[k][m].draw(cell)
+                        end
+                    end
+                end
             else
                 love.graphics.setColor(1, 1, 1)
             end
+
         end
     end
     for _, body in pairs(World:getBodies()) do
@@ -97,26 +99,35 @@ function grid:draw()
                 local x, y = body:getPosition()
                 local angle = body:getAngle()
                 local points = {body:getWorldPoints(shape:getPoints())}
+                local type = body:getType()
+                local fillType = type == "static" and "fill" or "line" 
+
+                love.graphics.setLineWidth(3)
 
                 love.graphics.push()
-                love.graphics.polygon("fill", points)
+                love.graphics.polygon(fillType, points)
                 love.graphics.pop()
+                love.graphics.setLineWidth(1)
             end
             if shapeType == "circle" then
                 local bx, by = body:getPosition()
                 local sx, sy = shape:getPoint()      -- circle's local offset relative to body
                 local radius = shape:getRadius()
                 local angle = body:getAngle()
+                local type = body:getType()
+                local fillType = type == "static" and "fill" or "line" 
 
                 -- Calculate actual world-space center of the circle
                 local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
                 local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
+                love.graphics.setLineWidth(3)
 
                 love.graphics.push()
                 love.graphics.translate(cx, cy)
                 love.graphics.rotate(angle)
-                love.graphics.circle("fill", 0, 0, radius)
+                love.graphics.circle(fillType, 0, 0, radius)
                 love.graphics.pop()
+                love.graphics.setLineWidth(1)
             end
         end
     end

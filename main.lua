@@ -2,16 +2,19 @@ wW, wH = love.graphics.getDimensions()
 
 Object = require "object"
 World = love.physics.newWorld(0, 9.81 * 64, false)
-local grid = require "grid"
+Grid = require "grid"
+Gui = require "gui"
 
 gravity = false
 
 function love.load()
-    grid:create()
+    Grid:create()
+    Gui:create()
 end
 function love.update(dt)
     World:update(dt)
-    grid:update()
+    Grid:update()
+    Gui:update()
             if gravity then
             World:setGravity(0, 9.81 * 64)
             print("Gravity ON")
@@ -25,7 +28,8 @@ function love.update(dt)
         end
 end
 function love.draw()
-    grid:draw()
+    Grid:draw()
+    Gui:draw()
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -36,6 +40,11 @@ function love.keypressed(key, scancode, isrepeat)
         for _, body in pairs(World:getBodies()) do
             body:destroy()
         end
-        grid:create()
+        Grid:create()
     end
 end 
+function love.mousepressed(x, y, button)
+    if button == 1 then
+        Gui:mousepressed(x, y)
+    end
+end
