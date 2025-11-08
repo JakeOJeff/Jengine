@@ -44,4 +44,19 @@ function object:newCirc(world, x, y, radius, type, angle)
 
     return self
 end
+
+
+function object:newTri(world, x, y, size, type, angle)
+    local self = setmetatable({}, object)
+    self.x = x + size/2
+    self.y = y + size/2
+    self.size = size
+    self.angle = angle or 0
+    self.type = type or "dynamic"
+
+    self.body = love.physics.newBody(world, self.x, self.y , self.type)
+
+    local half = size/2
+    
+end
 return object

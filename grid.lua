@@ -13,8 +13,23 @@ function grid:create()
     self.height = self.size * self.countY
     
     self.grids = {}
-    self.func = function (cell)
+
+    -- Default shape creator (rectangle)
+    self.func = function(cell)
         return Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", 0)
+    end
+
+    -- Alternate shape creators
+    self.createTriangle = function(cell)
+        local x, y = cell.x + self.size / 2, cell.y + self.size / 2
+        local half = self.size / 2
+        -- Equilateral triangle points centered in the cell
+        local vertices = {
+            x, y - half,       -- top
+            x - half, y + half, -- bottom left
+            x + half, y + half  -- bottom right
+        }
+        return Object:newTri(World, vertices, "dynamic", 0)
     end
 
     for i = 1, self.countX do
@@ -28,11 +43,12 @@ function grid:create()
             }
         end
     end
-    Object:newRect(World, self.x, self.y - 1, self.width, 1,"static", 0)
-    Object:newRect(World, self.x + self.width + 1, self.y, 1, self.height,"static", 0)
 
-    Object:newRect(World, self.x - 1, self.y, 1, self.height,"static", 0)
-    Object:newRect(World, self.x, self.y + self.height + 1, self.width, 1,"static", 0)
+    -- Border walls
+    Object:newRect(World, self.x, self.y - 1, self.width, 1, "static", 0)
+    Object:newRect(World, self.x + self.width + 1, self.y, 1, self.height, "static", 0)
+    Object:newRect(World, self.x - 1, self.y, 1, self.height, "static", 0)
+    Object:newRect(World, self.x, self.y + self.height + 1, self.width, 1, "static", 0)
 end
 
 function grid:update()
@@ -46,15 +62,20 @@ function grid:update()
                 cell.hovering = true
 
                 if love.mouse.isDown(1) and not cell.obj then
-                    cell.obj = self.func(cell)
+                    -- Example: hold Shift to create triangle
+                    if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
+                        cell.obj = self.createTriangle(cell)
+                    else
+                        cell.obj = self.func(cell)
+                    end
                 end
-
             else
                 cell.hovering = false
             end
         end
     end
 end
+
 
 function grid:draw()
     love.graphics.setLineWidth(0.5)
@@ -66,7 +87,7 @@ function grid:draw()
             if not gravity then
                 love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
             end
-                love.graphics.setColor(1,1,1)
+            love.graphics.setColor(1,1,1)
 
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1, 0.3)
@@ -83,52 +104,37 @@ function grid:draw()
             else
                 love.graphics.setColor(1, 1, 1)
             end
-
         end
     end
+
+    -- Draw physics objects (rects, circles, triangles)
     for _, body in pairs(World:getBodies()) do
-        -- You can get the fixtures attached to this body
         for _, fixture in pairs(body:getFixtures()) do
             local shape = fixture:getShape()
             local shapeType = shape:getType()
+            local bodyType = body:getType()
+            local fillType = bodyType == "static" and "fill" or "line"
+
+            love.graphics.push()
+            love.graphics.setLineWidth(2)
 
             if shapeType == "polygon" then
-                -- For rectangles
-                local x, y = body:getPosition()
-                local angle = body:getAngle()
                 local points = {body:getWorldPoints(shape:getPoints())}
-                local type = body:getType()
-                local fillType = type == "static" and "fill" or "line" 
-
-                love.graphics.setLineWidth(3)
-
-                love.graphics.push()
                 love.graphics.polygon(fillType, points)
-                love.graphics.pop()
-                love.graphics.setLineWidth(1)
-            end
-            if shapeType == "circle" then
+            elseif shapeType == "circle" then
                 local bx, by = body:getPosition()
-                local sx, sy = shape:getPoint()      -- circle's local offset relative to body
-                local radius = shape:getRadius()
+                local sx, sy = shape:getPoint()
                 local angle = body:getAngle()
-                local type = body:getType()
-                local fillType = type == "static" and "fill" or "line" 
-
-                -- Calculate actual world-space center of the circle
+                local radius = shape:getRadius()
                 local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
                 local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
-                love.graphics.setLineWidth(3)
-
-                love.graphics.push()
-                love.graphics.translate(cx, cy)
-                love.graphics.rotate(angle)
-                love.graphics.circle(fillType, 0, 0, radius)
-                love.graphics.pop()
-                love.graphics.setLineWidth(1)
+                love.graphics.circle(fillType, cx, cy, radius)
             end
+
+            love.graphics.pop()
         end
     end
 end
+
 
 return grid
