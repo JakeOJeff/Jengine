@@ -72,10 +72,14 @@ end
 
 function gui:update()
     local mx, my = love.mouse.getPosition()
-
     for i = 1, self.countX do
         for j = 1, self.countY do
             local cell = self.buttons[i][j]
+            if Grid.func == cell.func then
+                cell.selected = true
+            else
+                cell.selected = false
+            end
             if mx > cell.x and mx < cell.x + self.size and
                 my > cell.y and my < cell.y + self.size then
                 cell.hovering = true
@@ -115,8 +119,6 @@ function gui:mousepressed(mx, my)
                 my > cell.y and my < cell.y + self.size then
                 Grid.func = cell.func
                 cell.selected = true
-            else
-                cell.selected = false
             end
         end
     end
