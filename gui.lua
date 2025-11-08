@@ -91,9 +91,18 @@ function gui:create()
         return Object:newTri(World, cell.x, cell.y, self.size, "dynamic", rotation)
     end
     dynamicTri.draw = function(cell)
-        love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
-        love.graphics.setLineWidth(1)
+        local half = self.size / 2
+        local x, y = cell.x + half, cell.y + half
+
+        love.graphics.push()
+        love.graphics.translate(x , y)
+        love.graphics.rotate(rotation)
+        love.graphics.polygon("line",
+            half, -half,
+            half, half,
+            -half, half
+        )
+        love.graphics.pop()
     end
 end
 
