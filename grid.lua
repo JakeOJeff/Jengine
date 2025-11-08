@@ -73,11 +73,9 @@ function grid:draw()
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
                 love.graphics.setColor(1, 1, 1)
 
-                -- Draw the preview of the selected GUI button on hover
                 for k = 1, Gui.countX do
                     for m = 1, Gui.countY do
                         if Gui.buttons[k][m].func == Grid.func then
-                            -- Pass cell so the preview appears at correct location
                             Gui.buttons[k][m].draw(cell)
                         end
                     end
