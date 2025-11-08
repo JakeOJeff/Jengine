@@ -73,7 +73,14 @@ function gui:create()
         return Object:newTri(World, cell.x, cell.y, self.size, "static", 0)
     end
     staticTri.draw = function(cell)
-        love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
+        local half = self.size / 2
+        local x, y = cell.x + half, cell.y + half
+
+        love.graphics.polygon("fill",
+            x,  y - half,
+            x - half, y + half,
+            x + half, y + half
+        )
     end
     local dynamicTri = self.buttons[2][3]
     dynamicTri.func = function(cell)

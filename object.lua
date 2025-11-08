@@ -58,7 +58,7 @@ function object:newTri(world, x, y, size, type, angle)
 
     local half = size/2
     self.shape = love.physics.newPolygonShape(
-        0, -half
+        0, -half,
         -half, half,
         half, half
     )
