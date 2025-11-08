@@ -62,12 +62,7 @@ function grid:update()
                 cell.hovering = true
 
                 if love.mouse.isDown(1) and not cell.obj then
-                    -- Example: hold Shift to create triangle
-                    if love.keyboard.isDown("lshift") or love.keyboard.isDown("rshift") then
-                        cell.obj = self.createTriangle(cell)
-                    else
                         cell.obj = self.func(cell)
-                    end
                 end
             else
                 cell.hovering = false
