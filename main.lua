@@ -5,8 +5,9 @@ World = love.physics.newWorld(0, 9.81 * 64, false)
 Grid = require "grid"
 Gui = require "gui"
 
-gravity = false
 
+gravity = false
+rotation = 0
 function love.load()
     Grid:create()
     Gui:create()
@@ -41,6 +42,8 @@ function love.keypressed(key, scancode, isrepeat)
             body:destroy()
         end
         Grid:create()
+    elseif key == "e" then
+        rotation = rotation + 90
     end
 end 
 function love.mousepressed(x, y, button)
