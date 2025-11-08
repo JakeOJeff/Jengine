@@ -52,6 +52,7 @@ function gui:create()
         love.graphics.circle("line", cell.x + radius + 1, cell.y + radius + 1, radius - 1)
         love.graphics.setLineWidth(1)
     end
+
     local staticRect = self.buttons[1][2]
     staticRect.func = function(cell)
         return Object:newRect(World, cell.x, cell.y, self.size, self.size, "static", rotation)
@@ -64,10 +65,15 @@ function gui:create()
         return Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", rotation)
     end
     dynamicRect.draw = function(cell)
+        love.graphics.push()
+        love.graphics.translate(cell.x, cell.y)
+        love.graphics.rotate(rotation)
         love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
+        love.graphics.rectangle("line", 0, 0, self.size, self.size)
         love.graphics.setLineWidth(1)
+        love.graphics.pop()
     end
+
     local staticTri = self.buttons[1][3]
     staticTri.func = function(cell)
         return Object:newTri(World, cell.x, cell.y, self.size, "static", rotation)
