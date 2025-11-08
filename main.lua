@@ -43,7 +43,7 @@ function love.keypressed(key, scancode, isrepeat)
         end
         Grid:create()
     elseif key == "e" then
-        rotation = rotation + 90
+        rotation = rotation + math.rad(90)
     end
 end 
 function love.mousepressed(x, y, button)

@@ -1,12 +1,12 @@
 local grid = {}
 
 function grid:create()
-    local size = 48
+    local size = 24
     self.x = size
     self.y = size
     
-    self.countX = 10
-    self.countY = 10
+    self.countX = 20
+    self.countY = 20
     self.size = size
     
     self.width = self.size * self.countX

@@ -2,12 +2,12 @@ local gui = {}
 
 
 function gui:create()
-    self.size = 48
+    self.size = 24
 
     self.countX = 2
     self.countY = 3
 
-    self.x = self.size * 12
+    self.x = self.size * 2 * 12
     self.y = Grid.height - (self.size * self.countY)
 
     self.width = self.size * self.countX
@@ -44,12 +44,12 @@ function gui:create()
     end
     local dynamicCircle = self.buttons[2][1]
     dynamicCircle.func = function(cell)
-        return Object:newCirc(World, cell.x, cell.y, self.size, "dynamic", rotation)
+        return Object:newCirc(World, cell.x + 1, cell.y + 1, self.size - 1, "dynamic", rotation)
     end
     dynamicCircle.draw = function(cell)
         local radius = self.size / 2
         love.graphics.setLineWidth(3)
-        love.graphics.circle("line", cell.x + radius, cell.y + radius, radius)
+        love.graphics.circle("line", cell.x + radius + 1, cell.y + radius + 1, radius - 1)
         love.graphics.setLineWidth(1)
     end
     local staticRect = self.buttons[1][2]
@@ -77,11 +77,12 @@ function gui:create()
         local x, y = cell.x + half, cell.y + half
 
         love.graphics.push()
+        love.graphics.translate(x, y)
         love.graphics.rotate(rotation)
         love.graphics.polygon("fill",
-            x + half,  y - half,
-            x + half, y + half,
-            x - half , y + half
+            half,  -half,
+            half, half,
+            -half , half
         )
         love.graphics.pop()
     end
