@@ -2,7 +2,7 @@ wW, wH = love.graphics.getDimensions()
 
 Object = require "object"
 World = love.physics.newWorld(0, 9.81 * 64, false)
-World:setCallbacks(beginContact, nil, nil, nil)
+World:setCallbacks(beginContact, nil, nil, postSolve)
 Grid = require "grid"
 Gui = require "gui"
 
@@ -103,51 +103,47 @@ function beginContact(fixA, fixB, contact)
     local cx, cy = contact:getPositions()
 
     if cx and cy then
-        dynamicBody:applyLinearImpulse(dirX * strength, dirY * strength)
+        dynamicBody:applyLinearImpulse(dirX * strength, -dirY * strength)
     else
-        dynamicBody:applyLinearImpulse(dirX * strength, dirY * strength)
+        dynamicBody:applyLinearImpulse(dirX * strength, -dirY * strength)
     end
 
+end
 
-    -- local aData = fixA:getUserData()
-    -- local bData = fixB:getUserData()
+function postSolve(fixA, fixB, contact)
+    local aUserData = fixA:getUserData()
+    local bUserData = fixB:getUserData()
 
-    -- -- Identify which fixture is the bounce
-    -- local bounceFixture, otherFixture
+    local bounceFixture, dynamicFixture
 
-    -- if aData == "bounce" then
-    --     bounceFixture = fixA
-    --     otherFixture = fixB
-    -- elseif bData == "bounce" then
-    --     bounceFixture = fixB
-    --     otherFixture = fixA
-    -- else
-    --     return
-    -- end
+    if aUserData == "bounce" then
+        bounceFixture = fixA
+        dynamicFixture = fixB
+    elseif bUserData == "bounce" then
+        bounceFixture = fixB
+        dynamicFixture = fixA
+    else
+        return
+    end
 
-    -- local bounceBody = bounceFixture:getBody()
-    -- local otherBody = otherFixture:getBody()
+    local bounceBody = bounceFixture:getBody()
+    local dynamicBody = dynamicFixture:getBody()
 
-    -- -- Ignore static bodies
-    -- if otherBody:getType() ~= "dynamic" then return end
+    if dynamicBody:getType() ~= "dynamic" then return end
 
-    -- -- Get bounce angle
-    -- local angle = bounceBody:getAngle()
+    local angle = bounceBody:getAngle()
 
-    -- -- Direction vector the bounce is facing
-    -- local dirX = math.cos(angle)
-    -- local dirY = math.sin(angle)
+    local dirX = math.sin(angle)
+    local dirY = math.cos(angle)
 
-    -- -- Bounce strength
-    -- local strength = 800 -- tweak this to taste
+    local strength = 400
 
-    -- -- Apply impulse at the point of contact
-    -- local cx, cy = contact:getPositions()
-    -- if cx and cy then
-    --     otherBody:applyLinearImpulse(dirX * strength, dirY * strength, cx, cy)
-    -- else
-    --     -- fallback: apply at center if contact point unavailable
-    --     otherBody:applyLinearImpulse(dirX * strength, dirY * strength)
-    -- end
+    local cx, cy = contact:getPositions()
+
+    if cx and cy then
+        dynamicBody:applyLinearImpulse(dirX * strength, -dirY * strength)
+    else
+        dynamicBody:applyLinearImpulse(dirX * strength, -dirY * strength)
+    end
 end
 World:setCallbacks(beginContact, nil, nil, nil)
