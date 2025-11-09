@@ -93,7 +93,20 @@ function beginContact(fixA, fixB, contact)
 
     if dynamicBody:getType() ~= "dynamic" then return end
 
-    
+    local angle = bounceBody:getAngle()
+
+    local dirX = math.sin(angle)
+    local dirY = math.cos(angle)
+
+    local strength = 400
+
+    local cx, cy = contact:getPositions()
+
+    if cx and cy then
+        dynamicBody:applyLinearImpulse(dirX * strength, dirY * strength)
+    else
+        dynamicBody:applyLinearImpulse(dirX * strength, dirY * strength)
+    end
 
 
     -- local aData = fixA:getUserData()
