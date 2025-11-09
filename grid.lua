@@ -4,14 +4,14 @@ function grid:create()
     local size = 24
     self.x = size
     self.y = size
-    
+
     self.countX = 20
     self.countY = 20
     self.size = size
-    
+
     self.width = self.size * self.countX
     self.height = self.size * self.countY
-    
+
     self.grids = {}
 
     -- Default shape creator (rectangle)
@@ -25,7 +25,7 @@ function grid:create()
         local half = self.size / 2
         -- Equilateral triangle points centered in the cell
         local vertices = {
-            x, y - half,       -- top
+            x, y - half,        -- top
             x - half, y + half, -- bottom left
             x + half, y + half  -- bottom right
         }
@@ -58,11 +58,11 @@ function grid:update()
         for j = 1, self.countY do
             local cell = self.grids[i][j]
             if mx > cell.x and mx < cell.x + self.size and
-               my > cell.y and my < cell.y + self.size then
+                my > cell.y and my < cell.y + self.size then
                 cell.hovering = true
 
                 if love.mouse.isDown(1) and not cell.obj then
-                        cell.obj = self.func(cell)
+                    cell.obj = self.func(cell)
                 end
             else
                 cell.hovering = false
@@ -71,10 +71,9 @@ function grid:update()
     end
 end
 
-
 function grid:draw()
     love.graphics.setLineWidth(0.5)
-    
+
     for i = 1, self.countX do
         for j = 1, self.countY do
             local cell = self.grids[i][j]
@@ -82,7 +81,7 @@ function grid:draw()
             if not gravity then
                 love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
             end
-            love.graphics.setColor(1,1,1)
+            love.graphics.setColor(1, 1, 1)
 
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1, 0.3)
@@ -98,57 +97,55 @@ function grid:draw()
                 end
             else
                 love.graphics.setColor(1, 1, 1)
-                if self.grids[i][j].obj then
-                    local obj = self.grids[i][j].obj
-                    local body = obj.body
-                    for _, fixture in pairs(body:getFixtures()) do
-                        local shape = fixture:getShape()
-                        local shapeType = shape:getType()
-                        local bodyType = body:getType()
-                        local fillType = bodyType == "static" and "fill" or "line"
+            end
+            if self.grids[i][j].obj then
+                local obj = self.grids[i][j].obj
+                local body = obj.body
+                for _, fixture in pairs(body:getFixtures()) do
+                    local shape = fixture:getShape()
+                    local shapeType = shape:getType()
+                    local bodyType = body:getType()
+                    local fillType = bodyType == "static" and "fill" or "line"
 
-                        love.graphics.push()
-                        love.graphics.setLineWidth(2)
+                    love.graphics.push()
+                    love.graphics.setLineWidth(2)
 
-                        if shapeType == "polygon" then
-                            if not obj.imagery then
-                                local points = {body:getWorldPoints(shape:getPoints())}
-                                love.graphics.polygon(fillType, points)
-                            elseif obj.imagery then
-                                local bx, by = body:getPosition()
-                                local angle = body:getAngle()
+                    if shapeType == "polygon" then
+                        if not obj.imagery then
+                            local points = { body:getWorldPoints(shape:getPoints()) }
+                            love.graphics.polygon(fillType, points)
+                        elseif obj.imagery then
+                            local bx, by = body:getPosition()
+                            local angle = body:getAngle()
 
-                                local sx, sy = 1, 1
-                                if obj.size and obj.img then
-                                    local iw, ih = obj.img:getWidth(), obj.img:getHeight()
+                            local sx, sy = 1, 1
+                            if obj.size and obj.img then
+                                local iw, ih = obj.img:getWidth(), obj.img:getHeight()
 
-                                    sx = obj.size / iw
-                                    sy = obj.size / ih
-                                end
-
-                                if obj.img then
-                                    love.graphics.draw(obj.img, bx, by, angle, sx, sy, obj.img:getWidth() /2, obj.img:getHeight()/2)
-                                end
+                                sx = obj.size / iw
+                                sy = obj.size / ih
                             end
 
-                        elseif shapeType == "circle" then
-                            local bx, by = body:getPosition()
-                            local sx, sy = shape:getPoint()
-                            local angle = body:getAngle()
-                            local radius = shape:getRadius()
-                            local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
-                            local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
-                            love.graphics.circle(fillType, cx, cy, radius)
+                            if obj.img then
+                                love.graphics.draw(obj.img, bx, by, angle, sx, sy, obj.img:getWidth() / 2,
+                                    obj.img:getHeight() / 2)
+                            end
                         end
-
-                        love.graphics.pop()
+                    elseif shapeType == "circle" then
+                        local bx, by = body:getPosition()
+                        local sx, sy = shape:getPoint()
+                        local angle = body:getAngle()
+                        local radius = shape:getRadius()
+                        local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
+                        local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
+                        love.graphics.circle(fillType, cx, cy, radius)
                     end
+
+                    love.graphics.pop()
                 end
             end
         end
     end
-
 end
-
 
 return grid
