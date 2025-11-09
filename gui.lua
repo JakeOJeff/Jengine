@@ -117,8 +117,8 @@ function gui:create()
         love.graphics.pop()
     end
     local bouncer = self.buttons[1][4]
-    bouncer.func = function ()
-        
+    bouncer.func = function (cell)
+        return Object:newBounce(World, cell.x , cell.y, self.size, "static", rotation)
     end
     bouncer.draw = function ()
         

@@ -115,8 +115,20 @@ function grid:draw()
                                 local points = {body:getWorldPoints(shape:getPoints())}
                                 love.graphics.polygon(fillType, points)
                             elseif obj.imagery then
-                                local points = {body:getWorldPoints(shape:getPoints())}
-                                love.graphics.draw(obj.img, points[1], points[2])
+                                local bx, by = body:getPosition()
+                                local angle = body:getAngle()
+
+                                local sx, sy = 1, 1
+                                if obj.size and obj.img then
+                                    local iw, ih = obj.img:getWidth(), obj.img:getHeight()
+
+                                    sx = obj.size / iw
+                                    sy = obj.size / ih
+                                end
+
+                                if obj.img then
+                                    love.graphics.draw(obj.img, bx, by, angle, sx, sy, obj.img:getWidth() /2, obj.img:getHeight()/2)
+                                end
                             end
 
                         elseif shapeType == "circle" then

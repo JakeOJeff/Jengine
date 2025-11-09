@@ -87,7 +87,7 @@ function object:newBounce(world, x, y, size, type, angle)
     self.img = love.graphics.newImage("assets/bounce.png")
     self.body = love.physics.newBody(world, self.x, self.y, self.type) 
 
-    self.shape = love.physics.newRectangleShape(self.width, self.height)
+    self.shape = love.physics.newRectangleShape(self.size, self.size)
     self.fixture = love.physics.newFixture(self.body, self.shape)
 
     self.fixture:setSensor(true)
@@ -98,6 +98,6 @@ function object:newBounce(world, x, y, size, type, angle)
     end
 
     self.body:setAngle(self.angle)
-    
+    return self
 end
 return object
