@@ -3,7 +3,7 @@ local gui = {}
 -- images
 local bounceImg = love.graphics.newImage("assets/bounce.png")
 function gui:create()
-    self.size = 24
+    self.size = 48 / ScaleFactor
 
     self.countX = 2
     self.countY = 4

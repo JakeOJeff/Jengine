@@ -32,6 +32,7 @@ function love.update(dt)
         end
     end
 
+
     if rotation < targetRotation then
         rotation = rotation + rotationSpeed * dt
         rotating = true
@@ -68,6 +69,22 @@ end
 function love.mousepressed(x, y, button)
     if button == 1 then
         Gui:mousepressed(x, y)
+    end
+end
+
+function love.wheelmoved(x, y)
+    if love.keyboard.isDown("lctrl") then
+        if y > 0 then
+            ScaleFactor = ScaleFactor + 1
+            Gui:create()
+            Grid:create()
+        elseif y < 0 then
+            if ScaleFactor > 1 then
+                ScaleFactor = ScaleFactor - 1
+                Gui:create()
+                Grid:create()
+            end
+        end
     end
 end
 
