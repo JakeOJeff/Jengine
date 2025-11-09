@@ -5,7 +5,7 @@ function gui:create()
     self.size = 24
 
     self.countX = 2
-    self.countY = 3
+    self.countY = 4
 
     self.x = self.size * 2 * 12
     self.y = Grid.height - (self.size * self.countY)
@@ -115,6 +115,13 @@ function gui:create()
             -half, half
         )
         love.graphics.pop()
+    end
+    local bouncer = self.buttons[1][4]
+    bouncer.func = function ()
+        
+    end
+    bouncer.draw = function ()
+        
     end
 end
 
