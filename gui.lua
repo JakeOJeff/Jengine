@@ -1,6 +1,7 @@
 local gui = {}
 
-
+-- images
+local bounceImg = love.graphics.newImage("assets/bounce.png")
 function gui:create()
     self.size = 24
 
@@ -120,8 +121,26 @@ function gui:create()
     bouncer.func = function (cell)
         return Object:newBounce(World, cell.x , cell.y, self.size, "static", rotation)
     end
-    bouncer.draw = function ()
-        
+    bouncer.draw = function (cell)
+        local half = self.size / 2
+        local x, y = cell.x + half, cell.y  + half
+        local sx, sy = 0, 0
+        love.graphics.push()
+        love.graphics.translate(x, y)
+        love.graphics.scale()
+        love.graphics.rotate(rotation)
+        if self.size then
+            local iw, ih = bounceImg:getWidth(), bounceImg:getHeight()
+
+            sx = self.size / iw
+            sy = self.size / ih
+        end
+
+        if bounceImg then
+             love.graphics.draw(bounceImg, 0, 0, 0, sx, sy, bounceImg:getWidth() / 2,
+                                    bounceImg:getHeight() / 2)
+        end
+        love.graphics.pop()
     end
 end
 
