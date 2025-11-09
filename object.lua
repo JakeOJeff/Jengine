@@ -41,6 +41,7 @@ function object:newCirc(world, x, y, radius, type, angle)
         self.body:setAngularVelocity(0)
     end
 
+    self.fixture:setRestitution(0.5)
     self.body:setAngle(self.angle)
 
     return self
