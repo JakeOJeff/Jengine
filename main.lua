@@ -108,7 +108,7 @@ function beginContact(fixA, fixB, contact)
     local dirX = math.sin(angle)
     local dirY = math.cos(angle)
 
-    local strength = 400
+    local strength = 400 * ScaleFactor
 
     local cx, cy = contact:getPositions()
 
