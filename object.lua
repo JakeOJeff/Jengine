@@ -9,6 +9,7 @@ function object:newRect(world, x, y, width, height, type, angle)
     self.height = height
     self.angle = angle or 0
     self.type = type
+    self.imagery = false
 
     self.body = love.physics.newBody(world, self.x, self.y, self.type)
     self.shape = love.physics.newRectangleShape(self.width, self.height)
@@ -30,7 +31,7 @@ function object:newCirc(world, x, y, radius, type, angle)
     self.radius = radius/2
     self.angle = angle or 0
     self.type = type
-
+    self.imagery = false
     self.body = love.physics.newBody(world, self.x, self.y, self.type)
     self.shape = love.physics.newCircleShape(self.radius)
     self.fixture = love.physics.newFixture(self.body, self.shape)
@@ -53,7 +54,7 @@ function object:newTri(world, x, y, size, type, angle)
     self.size = size
     self.angle = angle or 0
     self.type = type or "dynamic"
-
+    self.imagery = false
     self.body = love.physics.newBody(world, self.x, self.y , self.type)
 
     local half = size/2
@@ -72,5 +73,31 @@ function object:newTri(world, x, y, size, type, angle)
 
     self.body:setAngle(self.angle)
     return self
+end
+
+function object:newBounce(world, x, y, size, type, angle)
+    local self = setmetatable({}, object)
+    self.x = x + size/2
+    self.y = y + size/2
+    self.size = size
+    self.angle = angle or 0
+    self.type = type or "static"
+    self.acceleration = 25
+    self.imagery = true
+    self.img = love.graphics.newImage("assets/bounce.png")
+    self.body = love.physics.newBody(world, self.x, self.y, self.type) 
+
+    self.shape = love.physics.newRectangleShape(self.width, self.height)
+    self.fixture = love.physics.newFixture(self.body, self.shape)
+
+    self.fixture:setSensor(true)
+
+    if not gravity then
+        self.body:setLinearVelocity(0, 0)
+        self.body:setAngularVelocity(0)
+    end
+
+    self.body:setAngle(self.angle)
+    
 end
 return object
