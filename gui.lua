@@ -58,18 +58,24 @@ function gui:create()
         return Object:newRect(World, cell.x, cell.y, self.size, self.size, "static", rotation)
     end
     staticRect.draw = function(cell)
-        love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
+        local half = self.size/2
+        love.graphics.push()
+        love.graphics.translate(cell.x + half, cell.y + half)
+        love.graphics.rotate(rotation)
+        love.graphics.rectangle("fill", -half, -half, self.size, self.size)
+        love.graphics.pop()
     end
     local dynamicRect = self.buttons[2][2]
     dynamicRect.func = function(cell)
         return Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", rotation)
     end
     dynamicRect.draw = function(cell)
+        local half = self.size/2
         love.graphics.push()
-        love.graphics.translate(cell.x, cell.y)
+        love.graphics.translate(cell.x + half, cell.y + half)
         love.graphics.rotate(rotation)
         love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", -self.size/2, -self.size/2, self.size, self.size)
+        love.graphics.rectangle("line", -half, -half, self.size, self.size)
         love.graphics.setLineWidth(1)
         love.graphics.pop()
     end

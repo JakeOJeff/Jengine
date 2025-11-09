@@ -57,6 +57,7 @@ function love.keypressed(key, scancode, isrepeat)
             body:destroy()
         end
         Grid:create()
+        Gui:create()
         targetRotation = 0
         rotation = 0
     elseif key == "e" and not rotating then
