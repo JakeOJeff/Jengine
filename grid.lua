@@ -64,6 +64,9 @@ function grid:update()
                 if love.mouse.isDown(1) and not cell.obj then
                     cell.obj = self.func(cell)
                 end
+                if love.mouse.isDown(2) and cell.obj then
+                    cell.obj = nil
+                end
             else
                 cell.hovering = false
             end
