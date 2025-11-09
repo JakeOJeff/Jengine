@@ -91,11 +91,12 @@ function grid:draw()
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
                 local centerX, centerY = (self.x + self.width)/2, (self.y + self.height)/2
                 local mx, my = love.mouse.getPosition()
-                local xCoordSize = mx > centerX and -self.width - cell.x - self.x * 2 or self.width - cell.x + self.size * 2
+                local xCoordSize = mx > centerX and (self.x - cell.x) or self.x + self.width - cell.x
+                local yCoordSize = my > centerY and (self.y - cell.y) or self.y + self.height - cell.y
                 love.graphics.setColor(0,0.7,0)
                 love.graphics.rectangle("fill", cell.x, cell.y, xCoordSize , 2)
                 love.graphics.setColor(0.7, 0, 0)
-                love.graphics.rectangle("fill", cell.x, cell.y, 2, self.height - cell.y + self.size * 2)
+                love.graphics.rectangle("fill", cell.x, cell.y, 2, yCoordSize)
                 love.graphics.setColor(1, 1, 1)
 
                 for k = 1, Gui.countX do
