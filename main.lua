@@ -54,13 +54,7 @@ function love.keypressed(key, scancode, isrepeat)
         rotation = 0
 
     elseif key == "r" then
-        for _, body in pairs(World:getBodies()) do
-            body:destroy()
-        end
-        Grid:create()
-        Gui:create()
-        targetRotation = 0
-        rotation = 0
+        resetState()
     elseif key == "e" and not rotating then
         targetRotation = targetRotation + math.rad(90)
     end
@@ -76,13 +70,11 @@ function love.wheelmoved(x, y)
     if love.keyboard.isDown("lctrl") then
         if y > 0 then
             ScaleFactor = ScaleFactor + 1
-            Gui:create()
-            Grid:create()
+            resetState()
         elseif y < 0 then
             if ScaleFactor > 1 then
                 ScaleFactor = ScaleFactor - 1
-                Gui:create()
-                Grid:create()
+                resetState()
             end
         end
     end
@@ -163,5 +155,15 @@ function postSolve(fixA, fixB, contact)
     else
         dynamicBody:applyLinearImpulse(dirX * strength, -dirY * strength)
     end
+end
+
+function resetState()
+    for _, body in pairs(World:getBodies()) do
+        body:destroy()
+    end
+    Grid:create()
+    Gui:create()
+    targetRotation = 0
+    rotation = 0
 end
 World:setCallbacks(beginContact, nil, nil, nil)

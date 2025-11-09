@@ -3,12 +3,12 @@ local gui = {}
 -- images
 local bounceImg = love.graphics.newImage("assets/bounce.png")
 function gui:create()
-    self.size = 48 / ScaleFactor
+    self.size = 48
 
     self.countX = 2
     self.countY = 4
 
-    self.x = self.size * 2 * 12
+    self.x = self.size * 12
     self.y = Grid.height - (self.size * self.countY)
 
     self.width = self.size * self.countX
@@ -37,7 +37,7 @@ function gui:create()
 
     local staticCircle = self.buttons[1][1]
     staticCircle.func = function(cell)
-        return Object:newCirc(World, cell.x, cell.y, self.size, "static", rotation)
+        return Object:newCirc(World, cell.x, cell.y, Grid.size, "static", rotation)
     end
     staticCircle.draw = function(cell)
         local radius = self.size / 2
@@ -45,7 +45,7 @@ function gui:create()
     end
     local dynamicCircle = self.buttons[2][1]
     dynamicCircle.func = function(cell)
-        return Object:newCirc(World, cell.x + 1, cell.y + 1, self.size - 1, "dynamic", rotation)
+        return Object:newCirc(World, cell.x + 1, cell.y + 1, Grid.size - 1, "dynamic", rotation)
     end
     dynamicCircle.draw = function(cell)
         local radius = self.size / 2
@@ -56,7 +56,7 @@ function gui:create()
 
     local staticRect = self.buttons[1][2]
     staticRect.func = function(cell)
-        return Object:newRect(World, cell.x, cell.y, self.size, self.size, "static", rotation)
+        return Object:newRect(World, cell.x, cell.y, Grid.size, Grid.size, "static", rotation)
     end
     staticRect.draw = function(cell)
         local half = self.size/2
@@ -68,7 +68,7 @@ function gui:create()
     end
     local dynamicRect = self.buttons[2][2]
     dynamicRect.func = function(cell)
-        return Object:newRect(World, cell.x, cell.y, self.size, self.size, "dynamic", rotation)
+        return Object:newRect(World, cell.x, cell.y, Grid.size, Grid.size, "dynamic", rotation)
     end
     dynamicRect.draw = function(cell)
         local half = self.size/2
@@ -83,7 +83,7 @@ function gui:create()
 
     local staticTri = self.buttons[1][3]
     staticTri.func = function(cell)
-        return Object:newTri(World, cell.x, cell.y, self.size, "static", rotation)
+        return Object:newTri(World, cell.x, cell.y, Grid.size, "static", rotation)
     end
     staticTri.draw = function(cell)
         local half = self.size / 2
@@ -101,7 +101,7 @@ function gui:create()
     end
     local dynamicTri = self.buttons[2][3]
     dynamicTri.func = function(cell)
-        return Object:newTri(World, cell.x, cell.y, self.size, "dynamic", rotation)
+        return Object:newTri(World, cell.x, cell.y, Grid.size, "dynamic", rotation)
     end
     dynamicTri.draw = function(cell)
         local half = self.size / 2
@@ -119,7 +119,7 @@ function gui:create()
     end
     local bouncer = self.buttons[1][4]
     bouncer.func = function (cell)
-        return Object:newBounce(World, cell.x , cell.y, self.size, "static", rotation)
+        return Object:newBounce(World, cell.x , cell.y, Grid.size, "static", rotation)
     end
     bouncer.draw = function (cell)
         local half = self.size / 2
