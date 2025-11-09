@@ -44,11 +44,16 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if key == "space" then
         gravity = not gravity
+                targetRotation = 0
+        rotation = 0
+
     elseif key == "r" then
         for _, body in pairs(World:getBodies()) do
             body:destroy()
         end
         Grid:create()
+        targetRotation = 0
+        rotation = 0
     elseif key == "e" then
         targetRotation = targetRotation + math.rad(90)
     end
