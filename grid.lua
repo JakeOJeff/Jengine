@@ -98,37 +98,44 @@ function grid:draw()
                 end
             else
                 love.graphics.setColor(1, 1, 1)
+                if self.grids[i][j].obj then
+                    local obj = self.grids[i][j].obj
+                    local body = obj.body
+                    for _, fixture in pairs(body:getFixtures()) do
+                        local shape = fixture:getShape()
+                        local shapeType = shape:getType()
+                        local bodyType = body:getType()
+                        local fillType = bodyType == "static" and "fill" or "line"
+
+                        love.graphics.push()
+                        love.graphics.setLineWidth(2)
+
+                        if shapeType == "polygon" then
+                            if not obj.imagery then
+                                local points = {body:getWorldPoints(shape:getPoints())}
+                                love.graphics.polygon(fillType, points)
+                            elseif obj.imagery then
+                                local points = {body:getWorldPoints(shape:getPoints())}
+                                love.graphics.draw(obj.img, points[1], points[2])
+                            end
+
+                        elseif shapeType == "circle" then
+                            local bx, by = body:getPosition()
+                            local sx, sy = shape:getPoint()
+                            local angle = body:getAngle()
+                            local radius = shape:getRadius()
+                            local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
+                            local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
+                            love.graphics.circle(fillType, cx, cy, radius)
+                        end
+
+                        love.graphics.pop()
+                    end
+                end
             end
         end
     end
 
-    -- Draw physics objects (rects, circles, triangles)
-    for _, body in pairs(World:getBodies()) do
-        for _, fixture in pairs(body:getFixtures()) do
-            local shape = fixture:getShape()
-            local shapeType = shape:getType()
-            local bodyType = body:getType()
-            local fillType = bodyType == "static" and "fill" or "line"
-
-            love.graphics.push()
-            love.graphics.setLineWidth(2)
-
-            if shapeType == "polygon" then
-                local points = {body:getWorldPoints(shape:getPoints())}
-                love.graphics.polygon(fillType, points)
-            elseif shapeType == "circle" then
-                local bx, by = body:getPosition()
-                local sx, sy = shape:getPoint()
-                local angle = body:getAngle()
-                local radius = shape:getRadius()
-                local cx = bx + math.cos(angle) * sx - math.sin(angle) * sy
-                local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
-                love.graphics.circle(fillType, cx, cy, radius)
-            end
-
-            love.graphics.pop()
-        end
-    end
 end
 
 
