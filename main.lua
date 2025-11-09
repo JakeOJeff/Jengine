@@ -10,6 +10,7 @@ gravity = false
 rotation = 0
 targetRotation = 0
 rotationSpeed = math.rad(90)
+rotating = false
 function love.load()
     Grid:create()
     Gui:create()
@@ -33,7 +34,11 @@ function love.update(dt)
 
     if rotation < targetRotation then
         rotation = rotation + rotationSpeed * dt
+        rotating = true
+    else
+        rotating = false
     end
+    collectgarbage("collect")
 end
 
 function love.draw()
@@ -54,7 +59,7 @@ function love.keypressed(key, scancode, isrepeat)
         Grid:create()
         targetRotation = 0
         rotation = 0
-    elseif key == "e" then
+    elseif key == "e" and not rotating then
         targetRotation = targetRotation + math.rad(90)
     end
 end

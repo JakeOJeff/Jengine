@@ -69,7 +69,7 @@ function gui:create()
         love.graphics.translate(cell.x, cell.y)
         love.graphics.rotate(rotation)
         love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", 0, 0, self.size, self.size)
+        love.graphics.rectangle("line", -self.size/2, -self.size/2, self.size, self.size)
         love.graphics.setLineWidth(1)
         love.graphics.pop()
     end
