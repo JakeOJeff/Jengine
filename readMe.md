@@ -16,3 +16,16 @@ Grid-Based Physics Simulator. Based on Box2D Physics Simulations.
 |  E  | Rotate Object |
 |  R  | Reset Grid    |
 |SPACE| Pause/Play Gravity |
+
+
+## Objects ( Up-To-Date )
+
+| NAME | TYPE | DISPLAY | ROTATION | IMAGERY |
+|:-----|:-----|:--------|:---------|:--------|
+|Circle|Static|Fill|False|False|
+|Circle|Dynamic|Line|False|False|
+|Rectangle|Static|Fill|True|False|
+|Rectangle|Dynamic|Line|True|False|
+|Triangle|Static|Fill|True|False|
+|Triangle|Dynamic|Line|True|False|
+|Bounce|Static|Image|True|True|
