@@ -94,7 +94,10 @@ function grid:draw()
                 for k = 1, Gui.countX do
                     for m = 1, Gui.countY do
                         if Gui.buttons[k][m].func == Grid.func then
+                            love.graphics.push()
+                            love.graphics.scale(Grid.size, Grid.size)
                             Gui.buttons[k][m].draw(cell)
+                            love.graphics.pop()
                         end
                     end
                 end

@@ -180,6 +180,7 @@ function gui:draw()
                 love.graphics.rectangle("line", cell.x, cell.y, self.size, self.size)
             end
 
+            
             cell.draw(cell)
         end
     end
