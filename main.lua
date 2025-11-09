@@ -84,10 +84,16 @@ function beginContact(fixA, fixB, contact)
     elseif bUserData == "bounce" then
         bounceFixture = fixB
         dynamicFixture = fixA
+    else
+        return
     end
 
+    local bounceBody = bounceFixture:getBody()
+    local dynamicBody = dynamicFixture:getBody()
 
+    if dynamicBody:getType() ~= "dynamic" then return end
 
+    
 
 
     -- local aData = fixA:getUserData()
