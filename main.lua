@@ -70,3 +70,8 @@ function love.mousepressed(x, y, button)
         Gui:mousepressed(x, y)
     end
 end
+
+
+function beginContact(fixA, fixB, contact)
+    
+end

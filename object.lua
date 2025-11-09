@@ -91,6 +91,7 @@ function object:newBounce(world, x, y, size, type, angle)
     self.shape = love.physics.newRectangleShape(self.size, self.size)
     self.fixture = love.physics.newFixture(self.body, self.shape)
 
+    self.fixture:setUserData("bounce")
     self.fixture:setSensor(true)
 
     if not gravity then
