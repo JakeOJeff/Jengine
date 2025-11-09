@@ -51,7 +51,7 @@ function gui:create()
         local radius = self.size / 2
         love.graphics.setLineWidth(3)
         love.graphics.circle("line", cell.x + radius + 1, cell.y + radius + 1, radius - 1)
-        love.graphics.setLineWidth(1)
+        love.graphics.setLineWidth(0.5)
     end
 
     local staticRect = self.buttons[1][2]
@@ -77,7 +77,7 @@ function gui:create()
         love.graphics.rotate(rotation)
         love.graphics.setLineWidth(3)
         love.graphics.rectangle("line", -half, -half, self.size, self.size)
-        love.graphics.setLineWidth(1)
+        love.graphics.setLineWidth(0.5)
         love.graphics.pop()
     end
 
