@@ -146,7 +146,7 @@ function gui:update()
 end
 
 function gui:draw()
-    love.graphics.setLineWidth(1)
+    love.graphics.setLineWidth(0.5)
     for i = 1, self.countX do
         for j = 1, self.countY do
             local cell = self.buttons[i][j]

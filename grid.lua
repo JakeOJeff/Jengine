@@ -140,6 +140,7 @@ function grid:draw()
                         local cy = by + math.sin(angle) * sx + math.cos(angle) * sy
                         love.graphics.circle(fillType, cx, cy, radius)
                     end
+                    love.graphics.setLineWidth(0.5)
 
                     love.graphics.pop()
                 end
