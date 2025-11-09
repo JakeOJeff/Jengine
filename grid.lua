@@ -89,15 +89,20 @@ function grid:draw()
             if cell.hovering then
                 love.graphics.setColor(0.7, 0.7, 1, 0.3)
                 love.graphics.rectangle("fill", cell.x, cell.y, self.size, self.size)
+                local centerX, centerY = (self.x + self.width)/2, (self.y + self.height)/2
+                local mx, my = love.mouse.getPosition()
+                local xCoordSize = mx > centerX and -self.width - cell.x - self.x * 2 or self.width - cell.x + self.size * 2
+                love.graphics.setColor(0,0.7,0)
+                love.graphics.rectangle("fill", cell.x, cell.y, xCoordSize , 2)
+                love.graphics.setColor(0.7, 0, 0)
+                love.graphics.rectangle("fill", cell.x, cell.y, 2, self.height - cell.y + self.size * 2)
                 love.graphics.setColor(1, 1, 1)
 
                 for k = 1, Gui.countX do
                     for m = 1, Gui.countY do
                         if Gui.buttons[k][m].func == Grid.func then
-                            love.graphics.push()
-                            love.graphics.scale(Grid.size, Grid.size)
+
                             Gui.buttons[k][m].draw(cell)
-                            love.graphics.pop()
                         end
                     end
                 end
