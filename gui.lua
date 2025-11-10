@@ -186,6 +186,7 @@ function gui:draw()
     end
 
     love.graphics.rectangle("line", Grid.width + self.size * 2, self.size * 2, self.size * 4, self.size * 3)
+    love.graphics.print("DEBUG : "..ScaleFactor.."\nRot"..rotation.."\nRad "..love.timer.getTime().."\nGrav "..tostring(gravity), Grid.width + self.size * 2 + self.size/2, self.size * 2 + self.size/2)
 end
 
 function gui:mousepressed(mx, my)
