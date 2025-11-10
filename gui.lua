@@ -48,10 +48,10 @@ function gui:create()
         return Object:newCirc(World, cell.x + 1, cell.y + 1, Grid.size - 1, "dynamic", rotation)
     end
     dynamicCircle.draw = function(cell)
-        local radius = self.size / 2
+        local radius = Grid.size / 2
         love.graphics.setLineWidth(3)
         love.graphics.circle("line", cell.x + radius + 1, cell.y + radius + 1, radius - 1)
-        love.graphics.setLineWidth(0.5)
+        love.graphics.setLineWidth(1)
     end
 
     local staticRect = self.buttons[1][2]
@@ -59,11 +59,11 @@ function gui:create()
         return Object:newRect(World, cell.x, cell.y, Grid.size, Grid.size, "static", rotation)
     end
     staticRect.draw = function(cell)
-        local half = self.size/2
+        local half = Grid.size/2
         love.graphics.push()
         love.graphics.translate(cell.x + half, cell.y + half)
         love.graphics.rotate(rotation)
-        love.graphics.rectangle("fill", -half, -half, self.size, self.size)
+        love.graphics.rectangle("fill", -half, -half, Grid.size, Grid.size)
         love.graphics.pop()
     end
     local dynamicRect = self.buttons[2][2]
@@ -71,13 +71,13 @@ function gui:create()
         return Object:newRect(World, cell.x, cell.y, Grid.size, Grid.size, "dynamic", rotation)
     end
     dynamicRect.draw = function(cell)
-        local half = self.size/2
+        local half = Grid.size/2
         love.graphics.push()
         love.graphics.translate(cell.x + half, cell.y + half)
         love.graphics.rotate(rotation)
         love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", -half, -half, self.size, self.size)
-        love.graphics.setLineWidth(0.5)
+        love.graphics.rectangle("line", -half, -half, Grid.size, Grid.size)
+        love.graphics.setLineWidth(1)
         love.graphics.pop()
     end
 
@@ -86,7 +86,7 @@ function gui:create()
         return Object:newTri(World, cell.x, cell.y, Grid.size, "static", rotation)
     end
     staticTri.draw = function(cell)
-        local half = self.size / 2
+        local half = Grid.size / 2
         local x, y = cell.x + half, cell.y + half
 
         love.graphics.push()
@@ -104,7 +104,7 @@ function gui:create()
         return Object:newTri(World, cell.x, cell.y, Grid.size, "dynamic", rotation)
     end
     dynamicTri.draw = function(cell)
-        local half = self.size / 2
+        local half = Grid.size / 2
         local x, y = cell.x + half, cell.y + half
 
         love.graphics.push()
@@ -122,18 +122,18 @@ function gui:create()
         return Object:newBounce(World, cell.x , cell.y, Grid.size, "static", rotation)
     end
     bouncer.draw = function (cell)
-        local half = self.size / 2
+        local half = Grid.size / 2
         local x, y = cell.x + half, cell.y  + half
         local sx, sy = 0, 0
         love.graphics.push()
         love.graphics.translate(x, y)
         love.graphics.scale()
         love.graphics.rotate(rotation)
-        if self.size then
+        if Grid.size then
             local iw, ih = bounceImg:getWidth(), bounceImg:getHeight()
 
-            sx = self.size / iw
-            sy = self.size / ih
+            sx = Grid.size / iw
+            sy = Grid.size / ih
         end
 
         if bounceImg then
@@ -184,6 +184,8 @@ function gui:draw()
             cell.draw(cell)
         end
     end
+
+    love.graphics.rectangle("line", Grid.width + self.size * 2, self.size * 2, self.size * 4, self.size * 3)
 end
 
 function gui:mousepressed(mx, my)

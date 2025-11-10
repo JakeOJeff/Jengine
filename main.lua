@@ -12,6 +12,7 @@ rotation = 0
 targetRotation = 0
 rotationSpeed = math.rad(90)
 rotating = false
+rotationDir = 1
 ScaleFactor = 2
 function love.load()
     Grid:create()
@@ -33,9 +34,14 @@ function love.update(dt)
     end
 
 
-    if rotation < targetRotation then
-        rotation = rotation + rotationSpeed * dt
+    if rotationDir *rotation <  targetRotation then
+        rotation = rotation + rotationDir * rotationSpeed * dt
         rotating = true
+        if rotation >= math.rad(360) then
+            rotation = 0
+        elseif rotation <= math.rad(0) then
+            rotation = math.rad(360)
+        end
     else
         rotating = false
     end
@@ -57,6 +63,10 @@ function love.keypressed(key, scancode, isrepeat)
         resetState()
     elseif key == "e" and not rotating then
         targetRotation = targetRotation + math.rad(90)
+        rotationDir = 1
+    elseif key == "q" and not rotating then
+        targetRotation = targetRotation - math.rad(90)
+        rotationDir = -1
     end
 end
 
