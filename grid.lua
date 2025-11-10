@@ -130,17 +130,12 @@ function grid:draw()
                             local angle = body:getAngle()
 
                             local sx, sy = 1, 1
-                            if obj.size and obj.img then
                                 local iw, ih = obj.img:getWidth(), obj.img:getHeight()
 
-                                sx = obj.size / iw
-                                sy = obj.size / ih
-                            end
+                                sx = Grid.size / iw
+                                sy = Grid.size / ih
 
-                            if obj.img then
-                                love.graphics.draw(obj.img, bx, by, angle, sx, sy, obj.img:getWidth() / 2,
-                                    obj.img:getHeight() / 2)
-                            end
+                                love.graphics.draw(obj.img, bx, by, angle, sx, sy, iw/2, ih/2)
                         end
                     elseif shapeType == "circle" then
                         local bx, by = body:getPosition()

@@ -40,7 +40,7 @@ function gui:create()
         return Object:newCirc(World, cell.x, cell.y, Grid.size, "static", rotation)
     end
     staticCircle.draw = function(cell)
-        local radius = self.size / 2
+        local radius = Grid.size / 2
         love.graphics.circle("fill", cell.x + radius, cell.y + radius, radius)
     end
     local dynamicCircle = self.buttons[2][1]

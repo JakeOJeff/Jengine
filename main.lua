@@ -109,14 +109,7 @@ function beginContact(fixA, fixB, contact)
     local dirY = math.cos(angle)
 
     local strength = 400 * ScaleFactor
-
-    local cx, cy = contact:getPositions()
-
-    if cx and cy then
-        dynamicBody:applyLinearImpulse(dirX * strength, -dirY * strength)
-    else
-        dynamicBody:applyLinearImpulse(dirX * strength, -dirY * strength)
-    end
+    dynamicBody:applyLinearImpulse(dirX * strength, -dirY * strength)
 
 end
 
