@@ -26,20 +26,17 @@ function love.update(dt)
         World:setGravity(0, 9.81 * 64)
     else
         World:setGravity(0, 0)
-        for _, body in pairs(World:getBodies()) do
-            body:setLinearVelocity(0, 0)
-            body:setAngularVelocity(0)
-        end
-    end
-    for i = 1, Grid.countX do
-        for j = 1, Grid.countY do
-            local cell = Grid.grids[i][j]
-            if cell.obj then
-                cell.obj.body:setLinearVelocity(0, 0)
-                cell.obj.body:setAngularVelocity(0)
+        for i = 1, Grid.countX do
+            for j = 1, Grid.countY do
+                local cell = Grid.grids[i][j]
+                if cell.obj then
+                    cell.obj.body:setLinearVelocity(0, 0)
+                    cell.obj.body:setAngularVelocity(0)
+                end
             end
         end
     end
+
 
 
     if rotation <  targetRotation then
