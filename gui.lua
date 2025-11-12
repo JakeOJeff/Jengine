@@ -162,7 +162,7 @@ function gui:update()
             end
         end
     end
-end
+end 
 
 function gui:draw()
     love.graphics.setLineWidth(0.5)
