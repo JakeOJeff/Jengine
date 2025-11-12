@@ -31,6 +31,15 @@ function love.update(dt)
             body:setAngularVelocity(0)
         end
     end
+    for i = 1, Grid.countX do
+        for j = 1, Grid.countY do
+            local cell = Grid.grids[i][j]
+            if cell.obj then
+                cell.obj.body:setLinearVelocity(0, 0)
+                cell.obj.body:setAngularVelocity(0)
+            end
+        end
+    end
 
 
     if rotation <  targetRotation then
@@ -156,8 +165,14 @@ function postSolve(fixA, fixB, contact)
 end
 
 function resetState()
-    for _, body in pairs(World:getBodies()) do
-        body:destroy()
+    for i = 1, Grid.countX do
+        for j = 1, Grid.countY do
+            local cell = Grid.grids[i][j]
+            if cell.obj then
+                cell.obj.body:setLinearVelocity(0, 0)
+                cell.obj.body:setAngularVelocity(0)
+            end
+        end
     end
     Grid:create()
     Gui:create()
