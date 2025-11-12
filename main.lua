@@ -12,7 +12,7 @@ rotation = 0
 targetRotation = 0
 rotationSpeed = math.rad(90)
 rotating = false
-ScaleFactor = 1
+ScaleFactor = 2
 function love.load()
     Grid:create()
     Gui:create()

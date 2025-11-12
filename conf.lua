@@ -1,4 +1,4 @@
 function love.conf(t)
     t.window.height = 48 * 12
-    t.console = true
+    t.console = false
 end
