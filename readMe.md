@@ -29,3 +29,8 @@ Grid-Based Physics Simulator. Based on Box2D Physics Simulations.
 |Triangle|Static|Fill|True|False|
 |Triangle|Dynamic|Line|True|False|
 |Bounce|Static|Image|True|True|
+
+
+demo: 
+https://github.com/user-attachments/assets/71c47748-45d5-41b8-a153-9cd919089311
+
